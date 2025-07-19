@@ -22,10 +22,8 @@
             </a>
         </div>
 
-        <div class="w-100" style="max-width: 500px;">
-            <div class="mt-4 px-4 py-3 bg-white shadow rounded">
+        <div class="w-100" >
                 {{ $slot }}
-            </div>
         </div>
     </div>
 

@@ -64,3 +64,26 @@
     font-size: 14px;
     color: #333;
 }
+/* star rating */
+.star-rating {
+    display: inline-block;
+    position: relative;
+    font-size: 1.2rem;
+    line-height: 1;
+    unicode-bidi: bidi-override;
+    color: #ccc; /* empty star color */
+}
+
+.star-rating-fill {
+    color: gold; /* filled star color */
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: width 0.5s ease; /* animation */
+}
+
+.star-rating-empty {
+    color: #ccc;
+}
