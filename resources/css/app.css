@@ -87,3 +87,10 @@
 .star-rating-empty {
     color: #ccc;
 }
+
+
+@media (max-width: 768px) {
+    .login-bg {
+        background-position: center top;
+    }
+}

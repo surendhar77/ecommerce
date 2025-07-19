@@ -8,14 +8,16 @@
         }
 
         .login-bg {
-            background: url('{{ asset('images/login/banner.avif') }}'); /* Moved image slightly to top */
+        
+            background: url('{{ asset('images/login/banner1.avif') }}') no-repeat center center;
+            background-size: cover;
             height: 100vh;
             width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden; /* Prevents scrollbars if content overflows slightly */
         }
-
 
         .login-card {
             background: rgba(255, 255, 255, 0.95);

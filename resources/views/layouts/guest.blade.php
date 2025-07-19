@@ -15,7 +15,7 @@
 </head>
 <body class="bg-light">
 
-    <div class="min-vh-100 d-flex flex-column justify-content-center align-items-center pt-5">
+    <div class="min-vh-100 d-flex  justify-content-center align-items-center">
         <div>
             <a href="/">
                 <x-application-logo class="w-20 h-20" />
@@ -23,9 +23,8 @@
         </div>
 
         <div class="w-100">
-            <div class="mt-4 px-4 py-3 bg-white shadow rounded">
+        
                 {{ $slot }}
-            </div>
         </div>
     </div>
 
