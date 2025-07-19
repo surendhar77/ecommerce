@@ -4,16 +4,31 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 
-// Home page - show products
-Route::get('/', [ProductController::class, 'index'])->name('home');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application.
+|
+*/
+
+// Home page - redirect to products listing
+Route::get('/', function () {
+    return view('home');
+})->name('home');
+
+// Products listing page
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 // Product details page
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
-// Dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Dashboard - redirect to products page after login
+Route::get('/home', function () {
+    return redirect()->route('products.index');
+})->name('home');
+
 
 // Authenticated user profile routes
 Route::middleware('auth')->group(function () {
@@ -22,4 +37,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+// Authentication routes
+require __DIR__ . '/auth.php';
