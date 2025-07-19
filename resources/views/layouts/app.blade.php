@@ -6,98 +6,100 @@
 
     <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- App CSS -->
     @vite('resources/css/app.css')
-
     @livewireStyles
+
+
 </head>
 
 <body>
-
-    <body>
-        <!-- Dot Circle Loader with Percentage -->
-        <div id="global-loader">
-            <div class="dot-circle-loader-container">
-                <div class="dot-circle">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                </div>
-                <div class="percentage-text mt-2">0%</div>
-                <p class="loading-text">Loading...</p>
+    <!-- Dot Circle Loader with Percentage -->
+    <div id="global-loader">
+        <div class="dot-circle-loader-container">
+            <div class="dot-circle">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
             </div>
+            <div class="percentage-text mt-2">0%</div>
+            <p class="loading-text">Loading...</p>
         </div>
+    </div>
+
+    @include('layouts.header')
 
 
-        <header class="bg-dark text-white p-3">
-            <div class="container d-flex justify-content-between align-items-center">
-                <h1 class="h3 mb-0">Laravel eCommerce</h1>
-                <nav>
-                    <a href="{{ route('home') }}" class="btn btn-outline-light me-2">Home</a>
-                    @guest
-                    <a href="{{ route('login') }}" class="btn btn-outline-light me-2">Login</a>
-                    <a href="{{ route('register') }}" class="btn btn-outline-light">Register</a>
-                    @else
-                    <span class="me-2">Welcome, {{ Auth::user()->name }}</span>
-                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                        @csrf
-                        <button type="submit" class="btn btn-light">Logout</button>
-                    </form>
-                    @endguest
-                </nav>
-            </div>
-        </header>
+    <main class="container py-4">
+        @yield('content')
+    </main>
 
-        <main class="container py-4">
-            @yield('content')
-        </main>
+    @include('layouts.footer')
 
-        <footer class="bg-light text-center py-3">
-            <p class="mb-0">&copy; {{ date('Y') }} Laravel eCommerce. All rights reserved.</p>
-        </footer>
 
-        <!-- Bootstrap JS CDN -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Hide global loader after page load -->
-        <script>
-            window.addEventListener('load', function() {
-                const loader = document.getElementById('global-loader');
-                if (loader) {
-                    loader.style.display = 'none';
-                }
-            });
-        </script>
-        <script>
-            const loader = document.getElementById('global-loader');
-            const percentageText = document.querySelector('.percentage-text');
+    <!-- Loader JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-            let percent = 0;
+    <!-- Loader JS -->
+    <script>
+        const loader = document.getElementById('global-loader');
+        const percentageText = document.querySelector('.percentage-text');
+        let percent = 0;
+        let interval;
 
-            const interval = setInterval(() => {
+        function startLoaderInterval() {
+            percent = 0;
+            percentageText.textContent = "0%";
+            interval = setInterval(() => {
                 if (percent < 99) {
                     percent++;
                     percentageText.textContent = percent + "%";
                 }
             }, 20);
+        }
 
-            window.addEventListener('load', () => {
-                clearInterval(interval);
-                percent = 100;
-                percentageText.textContent = "100%";
+        function showLoader() {
+            loader.style.display = 'flex';
+            startLoaderInterval();
+        }
 
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 500);
+        function hideLoader() {
+            clearInterval(interval);
+            percent = 100;
+            percentageText.textContent = "100%";
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 300);
+        }
+
+        // Hide loader after initial load
+        window.addEventListener('load', hideLoader);
+
+        // Show loader only on button clicks (not links)
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('button, input[type="submit"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    showLoader();
+                });
             });
-        </script>
+        });
+
+        // Livewire hooks
+        document.addEventListener("livewire:load", () => {
+            Livewire.hook('message.sent', () => {
+                showLoader();
+            });
+            Livewire.hook('message.processed', () => {
+                hideLoader();
+            });
+        });
+    </script>
 
 
-
-        @yield('scripts')
-        @livewireScripts
-    </body>
+    @yield('scripts')
+    @livewireScripts
+</body>
 
 </html>
