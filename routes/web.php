@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
@@ -14,9 +15,17 @@ use App\Http\Controllers\ProductController;
 */
 
 // Home page - redirect to products listing
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+// Route::get('/', function () {
+//     return view('home');
+// })->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/products-json', function () {
+    $path = public_path('api/dummyproductsapi.json');
+    $products = json_decode(file_get_contents($path), true);
+    return response()->json($products);
+});
+
 
 // Products listing page
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');

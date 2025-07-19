@@ -1,1 +1,66 @@
+/* Import Bootstrap */
 @import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* ======================
+   Dot Spinner Loader CSS
+   ====================== */
+#global-loader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #fff;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dot-circle-loader-container {
+    text-align: center;
+}
+
+.dot-circle {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+}
+
+.dot-circle .dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: #007bff;
+    border-radius: 50%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dot-circle .dot:nth-child(2) {
+    transform: translateX(-50%) rotate(90deg) translateY(-40px);
+}
+
+.dot-circle .dot:nth-child(3) {
+    transform: translateX(-50%) rotate(180deg) translateY(-40px);
+}
+
+.dot-circle .dot:nth-child(4) {
+    transform: translateX(-50%) rotate(270deg) translateY(-40px);
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+.percentage-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.loading-text {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #333;
+}
