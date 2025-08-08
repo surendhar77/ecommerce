@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+
 
 class CategoryController extends Controller
 {
@@ -37,9 +39,28 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
 
-    public function show(Category $category)
+    private function fetchProducts()
     {
-        return view('categories.show', compact('category'));
+        $path = public_path('api/detailedproducts.json');
+
+        if (!File::exists($path)) {
+            return collect();
+        }
+
+        $json = File::get($path);
+    
+        return collect(json_decode($json, true));
+    }
+
+    public function show($category)
+    {
+        $products = $this->fetchProducts()
+            ->where('category', $category)
+            ->unique('id') // ensures no duplicate product IDs
+            ->values();
+
+        $usdToInr = 83;
+        return view('categories.show', compact('products', 'category', 'usdToInr'));
     }
 
     public function edit(Category $category)

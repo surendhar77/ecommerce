@@ -11,4 +11,10 @@ class Category extends Model
         'name',
         'description', // new column
     ];
+
+    // Ensure the first letter of name is capitalized when retrieved
+    public function getNameAttribute($value)
+    {
+        return ucfirst($value);
+    }
 }

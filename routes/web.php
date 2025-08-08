@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -37,7 +38,8 @@ Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.s
 Route::get('/home', function () {
     return redirect()->route('products.index');
 })->name('home');
-
+//Category Show
+Route::get('/category/{category}', [CategoryController::class, 'show'])->name('category.show');
 
 // Authenticated user profile routes
 Route::middleware('auth')->group(function () {
