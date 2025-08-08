@@ -1,52 +1,94 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+@extends('layouts.app')
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+@section('content')
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: url('{{ asset("images/login/banner1.avif") }}') no-repeat center center fixed;
+        background-size: cover;
+    }
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    main.container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    .register-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        padding: 30px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    }
+</style>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+<main class="container">
+    <div class="register-card">
+        <h3 class="text-center mb-4">Create Account</h3>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        <form action="{{ route('register') }}" method="POST">
+            @csrf
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            {{-- Name --}}
+            <div class="mb-3">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" name="name"
+                       class="form-control @error('name') is-invalid @enderror"
+                       id="name" value="{{ old('name') }}"
+                       placeholder="Enter your full name">
+                @error('name')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+            {{-- Email --}}
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" name="email"
+                       class="form-control @error('email') is-invalid @enderror"
+                       id="email" value="{{ old('email') }}"
+                       placeholder="Enter your email">
+                @error('email')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
+            {{-- Password --}}
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password"
+                       class="form-control @error('password') is-invalid @enderror"
+                       id="password" placeholder="Enter your password">
+                @error('password')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+            {{-- Confirm Password --}}
+            <div class="mb-4">
+                <label for="password_confirmation" class="form-label">Confirm Password</label>
+                <input type="password" name="password_confirmation"
+                       class="form-control"
+                       id="password_confirmation"
+                       placeholder="Confirm your password">
+            </div>
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+            {{-- Register Button --}}
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </div>
+        </form>
+
+        <p class="text-center mt-3 mb-0">
+            Already have an account? <a href="{{ route('login') }}">Login</a>
+        </p>
+    </div>
+</main>
+@endsection
