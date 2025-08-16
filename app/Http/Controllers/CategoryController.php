@@ -48,20 +48,31 @@ class CategoryController extends Controller
         }
 
         $json = File::get($path);
-    
-        return collect(json_decode($json, true));
+        $data = json_decode($json, true);
+
+        // Collect all products, not just first element
+        $products = collect($data['products'] ?? []);
+        // dd($products);
+
+        return $products;
     }
 
     public function show($category)
     {
         $products = $this->fetchProducts()
             ->where('category', $category)
-            ->unique('id') // ensures no duplicate product IDs
             ->values();
 
+        // Skip the first 5 products, show only the rest
+        $remainingProducts = $products->slice(5)->values();
+        // dd($remainingProducts);
+
         $usdToInr = 83;
-        return view('categories.show', compact('products', 'category', 'usdToInr'));
+
+        return view('categories.show', compact('remainingProducts', 'category', 'usdToInr'));
     }
+
+
 
     public function edit(Category $category)
     {

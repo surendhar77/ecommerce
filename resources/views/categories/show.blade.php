@@ -5,7 +5,7 @@
     <h2>{{ ucfirst($category) }} Products</h2>
 
     <div class="row">
-        @forelse($products as $product)
+        @forelse($remainingProducts as $product)
             <div class="col-md-4 col-lg-3 mb-4">
                 <div class="card h-100">
                     {{-- Image --}}
