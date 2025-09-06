@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Mail\UserActionMail;
+use Illuminate\Support\Facades\Mail;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,16 +30,21 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('products.index', absolute: false));
+        // ✅ Send mail to admin when user logs in
+        $user = Auth::user();
+        Mail::to('admin@example.com')->send(new UserActionMail($user, 'logged in'));
+
+        // ✅ Redirect with success message
+        return redirect()->intended(route('dashboard', absolute: false))
+            ->with('success', 'Welcome back, ' . $user->name . '! You are now logged in.');
     }
+
 
     /**
      * Destroy an authenticated session.
      */
     public function destroy(Request $request): RedirectResponse
     {
-        // dd($request->all());
-        //     die;
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

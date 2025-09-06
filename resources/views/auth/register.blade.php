@@ -33,7 +33,7 @@
     <div class="register-card">
         <h3 class="text-center mb-4">Create Account</h3>
 
-        <form action="{{ route('register') }}" method="POST">
+        <form action="{{ route('register.store') }}" method="POST">
             @csrf
 
             {{-- Name --}}

@@ -16,9 +16,6 @@ use App\Http\Controllers\ProductController;
 */
 
 // Home page - redirect to products listing
-// Route::get('/', function () {
-//     return view('home');
-// })->name('home');
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 Route::get('/products-json', function () {
@@ -28,6 +25,8 @@ Route::get('/products-json', function () {
 });
 
 
+
+
 // Products listing page
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
@@ -35,9 +34,14 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
 // Dashboard - redirect to products page after login
-Route::get('/home', function () {
-    return redirect()->route('products.index');
-})->name('home');
+// Route::get('/home', function () {
+//     return redirect()->route('products.index');
+// })->name('home');
+
+Route::get('/dashboard', function () {
+    return view('dashboard'); // make sure you have resources/views/dashboard.blade.php
+})->middleware(['auth'])->name('dashboard');
+
 //Category Show
 Route::get('/category/{category}', [CategoryController::class, 'show'])->name('category.show');
 

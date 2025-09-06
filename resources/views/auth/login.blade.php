@@ -33,7 +33,7 @@
     <div class="login-card">
         <h2 class="text-center mb-4">Login</h2>
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login.store') }}">
             @csrf
 
             <div class="mb-3">
