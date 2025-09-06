@@ -27,12 +27,14 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
+
         $request->session()->regenerate();
 
-        // Send mail to admin
+        // ✅ Send mail to admin when user logs in
         $user = Auth::user();
         Mail::to('admin@example.com')->send(new UserActionMail($user, 'logged in'));
 
+        // ✅ Redirect with success message
         return redirect()->intended(route('dashboard', absolute: false))
             ->with('success', 'Welcome back, ' . $user->name . '! You are now logged in.');
     }
