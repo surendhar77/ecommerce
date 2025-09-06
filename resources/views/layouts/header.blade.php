@@ -2,7 +2,7 @@
     <div class="container d-flex justify-content-between align-items-center">
         <h1 class="h3 mb-0">Laravel eCommerce</h1>
         <nav class="d-flex align-items-center">
-            <a href="{{ url('/') }}" class="btn btn-outline-light me-2">Home</a>
+            <!-- <a href="{{ url('/') }}" class="btn btn-outline-light me-2">Home</a> -->
 
             @guest
             <a href="{{ route('login') }}" class="btn btn-outline-light me-2">Login</a>
