@@ -19,7 +19,7 @@ use App\Http\Controllers\ProductController;
 // Route::get('/', function () {
 //     return view('home');
 // })->name('home');
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 Route::get('/products-json', function () {
     $path = public_path('api/dummyproductsapi.json');
@@ -32,7 +32,7 @@ Route::get('/products-json', function () {
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 // Product details page
-Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
 // Dashboard - redirect to products page after login
 Route::get('/home', function () {

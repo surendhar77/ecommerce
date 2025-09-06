@@ -65,6 +65,13 @@
                                     </span>
                                     ({{ number_format($ratingValue, 1) }})
                                 </small>
+                                {{-- View Button --}}
+                                <div class="mt-2">
+                                    <a href="{{ route('products.show', $product['id']) }}" class="btn btn-sm btn-primary w-100">
+                                        View
+                                    </a>
+                                </div>
+
                             </div>
                         </div>
                     </div>
